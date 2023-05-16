@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "flask-auth"
+name = "flask-user-auth-example"
 version = "0.1.0"
 description = "Example of authentication with Flask."
 authors = ["Igor Ferreira <iferreira.n01@gmail.com>"]
 readme = "README.md"
-packages = [{include = "flask_auth"}]
+packages = [{include = "flask_user_auth"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
