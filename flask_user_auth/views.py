@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, render_template, request, send_from_directory
 
 from flask_user_auth.database import User, db
 
@@ -33,4 +33,6 @@ def init_app(app: Flask) -> None:
 
     @app.route('/download')
     def download():
-        pass
+        return send_from_directory(
+            'static', 'files/cheat_sheet.pdf', as_attachment=True
+        )
