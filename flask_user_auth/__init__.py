@@ -3,9 +3,9 @@ from flask import Flask
 from flask_user_auth import config, database, views
 
 
-def create_app() -> Flask:
+def create_app(**settings) -> Flask:
     app = Flask(__name__)
-    config.init_app(app)
+    config.init_app(app, settings)
     database.init_app(app)
     views.init_app(app)
     return app
