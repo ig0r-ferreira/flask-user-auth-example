@@ -10,7 +10,7 @@ from flask_user_auth.database import User, create_tables, db
 fake = Faker()
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='module', autouse=True)
 def user() -> dict[str, str]:
     return {
         'name': fake.name(),
@@ -19,7 +19,7 @@ def user() -> dict[str, str]:
     }
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='module')
 def app(user: dict[str, str]) -> Flask:
     app_ = create_app(
         TESTING=True,
@@ -36,12 +36,12 @@ def app(user: dict[str, str]) -> Flask:
     return app_
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='module')
 def client(app: Flask) -> FlaskClient:
     return app.test_client()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='module')
 def client_with_logged_user(app: Flask) -> FlaskClient:
     with app.app_context():
         user = db.session.get(User, 1)
