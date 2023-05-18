@@ -1,6 +1,9 @@
+from typing import Self
+
 from flask import Flask
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import select
 from werkzeug.security import check_password_hash, generate_password_hash
 
 db = SQLAlchemy()
@@ -26,3 +29,7 @@ class User(UserMixin, db.Model):
 
     def is_correct_password(self, password: str) -> bool:
         return check_password_hash(self.password, password)
+
+    @staticmethod
+    def get_by_email(email: str) -> Self:
+        return db.session.scalar(select(User).where(User.email == email))
