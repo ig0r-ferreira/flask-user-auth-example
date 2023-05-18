@@ -21,7 +21,11 @@ def user() -> dict[str, str]:
 
 @pytest.fixture(scope='session')
 def app(user: dict[str, str]) -> Flask:
-    app_ = create_app(TESTING=True, SQLALCHEMY_DATABASE_URI='sqlite://')
+    app_ = create_app(
+        TESTING=True,
+        SQLALCHEMY_DATABASE_URI='sqlite://',
+        WTF_CSRF_ENABLED=False,
+    )
     app_.test_client_class = FlaskLoginClient
 
     with app_.app_context():

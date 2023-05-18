@@ -3,7 +3,6 @@ from flask import (
     flash,
     redirect,
     render_template,
-    request,
     send_from_directory,
     url_for,
 )
@@ -11,6 +10,7 @@ from flask.typing import ResponseReturnValue
 from flask_login import login_required, login_user, logout_user
 
 from flask_user_auth.database import User, db
+from flask_user_auth.forms import LoginForm, RegisterForm
 
 
 def init_app(app: Flask) -> None:
@@ -20,14 +20,13 @@ def init_app(app: Flask) -> None:
 
     @app.route('/register', methods=['GET', 'POST'])
     def register() -> ResponseReturnValue:
-        if request.method == 'POST':
-            form_data = request.form.to_dict()
-            email = form_data.get('email')
+        form = RegisterForm()
 
-            user = User.get_by_email(email)
+        if form.validate_on_submit():
+            user = User.get_by_email(form.email.data)
 
             if not user:
-                new_user = User(**form_data)
+                new_user = User(**form.data)
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user)
@@ -39,14 +38,15 @@ def init_app(app: Flask) -> None:
                 'error',
             )
 
-        return render_template('register.html')
+        return render_template('register.html', form=form)
 
     @app.route('/login', methods=['GET', 'POST'])
     def login() -> ResponseReturnValue:
-        if request.method == 'POST':
-            email = request.form.get('email')
-            password = request.form.get('password')
+        form = LoginForm()
 
+        if form.validate_on_submit():
+            email = form.email.data
+            password = form.password.data
             user = User.get_by_email(email)
 
             if not user:
@@ -57,7 +57,7 @@ def init_app(app: Flask) -> None:
                 login_user(user)
                 return redirect(url_for('secrets'))
 
-        return render_template('login.html')
+        return render_template('login.html', form=form)
 
     @app.route('/secrets')
     @login_required

@@ -12,6 +12,7 @@ flask = "^2.3.2"
 flask-login = "^0.6.2"
 flask-sqlalchemy = "^3.0.3"
 python-dotenv = "^1.0.0"
+flask-wtf = "^1.1.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -34,6 +35,12 @@ format = "isort . && blue ."
 pre_test = "task lint"
 test = "coverage run --source=flask_user_auth -m pytest -s -x -vv"
 post_test = "coverage html"
+
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:'flask.Markup' is deprecated and will be removed in Flask 2.4:DeprecationWarning",
+]
 
 
 [build-system]
