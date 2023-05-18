@@ -1,6 +1,6 @@
 {% with errors = get_flashed_messages(category_filter=["error"]) %}
 {% if errors %}
-<ul class='error-list'>
+<ul class='list-unstyled alert alert-danger text-center fw-semibold' role="alert">
     {% for error in errors %}
     <li>{{ error }}</li>
     {% endfor %}
