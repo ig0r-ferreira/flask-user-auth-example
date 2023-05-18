@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import EmailField, PasswordField, StringField, SubmitField
-from wtforms.validators import InputRequired
+from wtforms.validators import Email, InputRequired, Length
 
 
 class BaseForm(FlaskForm):
@@ -14,13 +14,17 @@ class BaseForm(FlaskForm):
 
 
 class LoginForm(BaseForm):
-    email = EmailField('Email', validators=[InputRequired()])
-    password = PasswordField('Password', validators=[InputRequired()])
+    email = EmailField('Email', validators=[InputRequired(), Email()])
+    password = PasswordField(
+        'Password', validators=[InputRequired(), Length(min=8)]
+    )
     submit = SubmitField('Sign in')
 
 
 class RegisterForm(BaseForm):
     name = StringField('Name', validators=[InputRequired()])
-    email = EmailField('Email', validators=[InputRequired()])
-    password = PasswordField('Password', validators=[InputRequired()])
+    email = EmailField('Email', validators=[InputRequired(), Email()])
+    password = PasswordField(
+        'Password', validators=[InputRequired(), Length(min=8)]
+    )
     submit = SubmitField('Sign up')

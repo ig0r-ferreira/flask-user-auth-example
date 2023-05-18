@@ -7,15 +7,15 @@ from flask_login import FlaskLoginClient
 from flask_user_auth import create_app
 from flask_user_auth.database import User, create_tables, db
 
-faker = Faker()
+fake = Faker()
 
 
 @pytest.fixture(scope='session', autouse=True)
 def user() -> dict[str, str]:
     return {
-        'name': faker.name(),
-        'email': faker.email(),
-        'password': faker.password(),
+        'name': fake.name(),
+        'email': fake.email(),
+        'password': fake.password(length=8),
     }
 
 

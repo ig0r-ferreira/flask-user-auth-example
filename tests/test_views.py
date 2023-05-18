@@ -50,7 +50,7 @@ def test_registering_with_an_email_already_registered_should_return_an_error_mes
     form_data = {
         'name': faker.name(),
         'email': user['email'],
-        'password': faker.password(),
+        'password': faker.password(length=8),
     }
     response = client.post('/register', data=form_data)
     data = response.get_data(as_text=True)
@@ -67,7 +67,7 @@ def test_registering_with_a_non_existent_email_should_redirect_to_secrets_page(
     form_data = {
         'name': faker.name(),
         'email': faker.email(),
-        'password': faker.password(),
+        'password': faker.password(length=8),
     }
     response = client.post('/register', data=form_data)
 
@@ -92,7 +92,7 @@ def test_acessing_login_page_should_return_status_ok(
 def test_login_with_a_non_existent_email_should_return_a_error_message(
     client: FlaskClient, faker
 ) -> None:
-    form_data = {'email': faker.email(), 'password': faker.password()}
+    form_data = {'email': faker.email(), 'password': faker.password(length=8)}
 
     response = client.post('/login', data=form_data)
     data = response.get_data(as_text=True)
@@ -106,7 +106,7 @@ def test_login_with_incorrect_password_should_return_a_error_message(
     user: dict[str, str],
     faker,
 ) -> None:
-    form_data = {'email': user['email'], 'password': faker.password()}
+    form_data = {'email': user['email'], 'password': faker.password(length=8)}
 
     response = client.post('/login', data=form_data)
     data = response.get_data(as_text=True)
