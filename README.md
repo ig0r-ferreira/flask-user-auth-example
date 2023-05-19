@@ -35,7 +35,11 @@ This project is an example of user authentication using Flask and Flask-Login.
     ```
     poetry install
     ```
-4. Run the app:
+4. Initialize the database (run this command only once):
+    ```
+    flask init-db
+    ```
+5. Run the app:
    ```
    flask --debug run
    ```
