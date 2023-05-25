@@ -11,7 +11,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     env: 
-      POETRY_HOME: /opt/poetry
+      FLASK_SECRET_KEY: ${{ secrets.FLASK_SECRET_KEY }}
     steps:
       - name: Clone the project
         uses: actions/checkout@v3
